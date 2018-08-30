@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css" />
+    </head>
+    <body>
+        <form>
+            <input type="radio" name="lang" id="python" checked /> python<br>
+            <input type="radio" name="lang" id="shell" /> shell<br>
+            <input type="radio" name="lang" id="cpp" /> c/cpp<br>
+        </form>
+        input:<br>
+        <textarea id="edit">here!</textarea>
+        <button onclick="wow()">click</button>
+        <pre><code class="python" id="code">import code
+code.interact(a=1)</code></pre>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            function wow(){
+                code = document.getElementById("code")
+                if(document.getElementById('python').checked){
+                    code.className = 'python'
+                }
+                if(document.getElementById('cpp').checked){
+                    code.className = 'cpp'
+                }
+                // if(document.getElementById('shell').checked){
+                //     code.className = 'bash'
+                // }
+                text = document.getElementById("edit").value
+                
+                code.innerText = text
+                hljs.highlightBlock(code)
+            }
+        </script>
+    </body>
+</html>
