@@ -20,6 +20,10 @@ code.interact(a=1)</code></pre>
         <script>hljs.initHighlightingOnLoad();</script>
         <script>
             function wow(){
+                hljs.configure({
+                    // useBR: true,
+                    tabReplace: '    ',
+                })
                 code = document.getElementById("code")
                 if(document.getElementById('python').checked){
                     code.className = 'python'
