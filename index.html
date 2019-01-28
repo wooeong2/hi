@@ -1,49 +1,449 @@
-<html>
-    <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css" />
-    </head>
-    <body>
-        <form>
-            <input type="radio" name="lang" id="python" checked /> python<br>
-            <input type="radio" name="lang" id="shell" /> shell<br>
-            <input type="radio" name="lang" id="cpp" /> c/cpp<br>
-            <input type="radio" name="lang" id="js" /> js<br>
-        </form>
-        input:<br>
-        <textarea style="    width: 90%;height: 300px;" id="edit">here!</textarea>
-        <button onclick="wow()">click</button>
-        <pre><code class="python" id="code">import code
-code.interact(a=1)</code></pre>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            function wow(){
-                hljs.configure({
-                    // useBR: true,
-                    tabReplace: '    ',
-                })
-                code = document.getElementById("code")
-                if(document.getElementById('python').checked){
-                    code.className = 'python'
-                }
-                if(document.getElementById('cpp').checked){
-                    code.className = 'cpp'
-                }
-                if(document.getElementById('js').checked){
-                    code.className = 'javascript'
-                }
-                // if(document.getElementById('shell').checked){
-                //     code.className = 'bash'
-                // }
-                text = document.getElementById("edit").value
-                
-                code.innerText = text
-                hljs.highlightBlock(code)
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Highlighter</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-4321' https://cdnjs.cloudflare.com; style-src 'nonce-1234' https://cdnjs.cloudflare.com; img-src data:; base-uri 'none'; default-src 'none'" />
+    <meta name="google" content="notranslate" />
+    <meta name="theme-color" content="black" />
+    <script referrerpolicy="no-referrer" integrity="sha384-ZeLYJ2PNSQjvogWP559CDAf02Qb8FE5OyQicqtz/+UhZutbrwyr87Be7NPH/RgyC" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script referrerpolicy="no-referrer" integrity="sha384-ym1mNTxz+QpVTTiHf7i5cXz4YBzHvs+PsFxUEcTU0/Hfcs5iaFr2hYKBEBZqbrnt" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
+    <script referrerpolicy="no-referrer" integrity="sha384-eJwptg6uVPH3ZzRoKwMHIrdV2FnirPq6UcWzhYLpkCvkZnHSFjp9vpXzGs0d94hA" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+    <script referrerpolicy="no-referrer" integrity="sha384-+YpWNCezQz+sxXoikykyglR7+E7uYhTGl/AyrIDkT8Ekpj6/YlBabpotY9TXqnfe" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+    <script referrerpolicy="no-referrer" integrity="sha384-7oEOpqNJmMFRcgwBQDjz1HaUfLLFlrLiikgdpKU7VPeab2Dcs3kpKxuVhnZMdzvH" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+    <link rel="stylesheet" referrerpolicy="no-referrer" integrity="sha384-HNGokaYN28H3qifBLVX5/ob64kuuYiIeQfo/b+M/hzijJeueJbsVEAvglj1qvfuY" crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css" />
+    <style type="text/css" nonce="1234"><!--/*--><![CDATA[/*><!--*/
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: visible;
+}
+.hlform {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}
+.hlform .langchoices {
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: 32px;
+  background: black;
+  color: white;
+}
+.hlform .langchoices label {
+  display: block;
+  float: left;
+  padding: 6px 0;
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+  overflow: visible;
+  -webkit-transition: background-color 100ms ease-out;
+  -ms-transition: background-color 100ms ease-out;
+  transition: background-color 100ms ease-out;
+}
+.hlform .langchoices label.selauto {
+  font-family: sans-serif;
+  padding-left: 0.2em;
+  padding-right: 0.4em;
+}
+.hlform .langchoices label.sellang {
+  width: 56px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-origin: content-box;
+}
+.hlform .langchoices label:hover {
+  background-color: rgba(192, 192, 192, 0.2);
+}
+.hlform .langchoices label.active {
+  background-color: white;
+}
+.hlform .langchoices label.selauto.active {
+  background-color: rgba(192, 192, 192, 0.6);
+}
+.hlform .langchoices label.selauto.active:hover {
+  background-color: rgba(192, 192, 192, 0.5);
+}
+.hlform .langchoices label:active {
+  background-color: rgba(192, 192, 192, 0.8);
+}
+.hlform .langchoices input {
+  margin-right: 0.3em;
+  vertical-align: middle;
+}
+.hlform .langchoices label.sellang input {
+  display: none;
+}
+.hlform .codearea {
+  position: absolute;
+  left: 0; top: 32px; right: 0; bottom: 0;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  overflow: auto;
+  border: 0 none;
+
+  white-space: pre;
+  font-family: monospace;
+
+  cursor: text;
+  /*-moz-appearance: textfield-multiline;
+  -webkit-appearance: textarea;*/
+}
+.hlform .codearea:empty::before {
+  content: "Enter text here..";
+  color: gray;
+}
+    /*]]>*/--></style>
+    <script type="text/javascript" nonce="4321"><!--/*--><![CDATA[/*><!--*/
+      window.onerror = alert;
+      document.addEventListener('DOMContentLoaded', function () {
+        'use strict';
+
+        var LANGUAGES = ['python', 'bash', 'cpp', 'javascript'];
+        var INDENT = 4;
+        hljs.configure();
+
+        function logfn() {
+          return console.log.apply(console, arguments); /* */
+        }
+
+        function getColumn(anchor, node, delta) {
+          var col = delta || 0, cur = node;
+          while (cur !== anchor && cur != null) {
+            var prev = cur.previousSibling;
+            if (prev == null) {
+              cur = cur.parentNode;
+            } else {
+              var txt = prev.textContent;
+              var idx = txt.lastIndexOf('\n');
+              col += txt.length - (idx + 1);
+              cur = idx === -1 ? prev : null;
             }
-        </script>
-    </body>
+          }
+          return col;
+        }
+
+        function reindent(text, indent, pointFn) {
+          var RE = /[\n\t]/g, res, det = 0;
+          while ((res = RE.exec(text)) !== null) {
+            var i = res.index;
+            switch (res[0]) {
+              case '\n':
+                det = -(i + 1);
+                break;
+              case '\t':
+                var k = indent - (i + det) % indent;
+                pointFn(i, k);
+                det += k - 1;
+                break;
+              default:
+                break;
+            }
+          }
+        }
+
+        function bsleft(a, x, lo, hi) {
+          var l = lo || 0, h = hi == null ? a.length : hi;
+          while (l < h) {
+            var m = Math.floor((l + h) * 0.5);
+            if (a[m] < x) l = m + 1; else h = m;
+          }
+          return l;
+        }
+
+        function OffsetQuery(anchor) {
+          var key = 'data-OffsetQuery$cache';
+
+          function Info(elem, pred) {
+            this.off = pred ? pred.off + pred.len : 0;
+            this.len = elem.textContent.length;
+          }
+
+          function queryNode(node) {
+            var cur = node, info;
+            while (!((info = cur[key]) instanceof Info)) {
+              var prev = cur.previousSibling;
+              if (!prev) {
+                info = new Info(cur);
+                cur[key] = info;
+                break;
+              }
+              cur = prev;
+            }
+            while (cur !== node) {
+              cur = cur.nextSibling;
+              info = new Info(cur, info);
+              cur[key] = info;
+            }
+            return info;
+          }
+
+          function getNodeTextOffset(child, delta) {
+            var offset = delta || 0, node = child;
+            if (node === anchor || !anchor.contains(node)) return null;
+            logfn("getNodeTextOffset(", anchor, ",", child, ") =");
+            while (node !== anchor) {
+              var eoff = queryNode(node).off;
+              logfn("  node:", node, ",off:", eoff);
+              offset += eoff;
+              node = node.parentNode;
+              if (node == null) {
+                logfn("... ??");
+                return null;
+              }
+            }
+            logfn("...", offset);
+            return offset;
+          }
+
+          function textOffsetToNode(target) {
+            var offset = 0, node = anchor, child;
+            logfn("textOffsetToNode(", anchor, ",", target, ") =");
+            while (offset <= target && (child = node.firstChild) != null) {
+              var offn;
+              logfn(" node:", node, ", child:", child);
+              while ((offn = offset + child.textContent.length) < target) {
+                logfn("  offn:", offn, "child:", child);
+                offset = offn;
+                if ((child = child.nextSibling) == null) {
+                  logfn("... ??");
+                  return null;
+                }
+              }
+              node = child;
+            }
+            logfn("... { node:", node, ", offset:", target - offset, "}");
+            return { node: node, offset: target - offset };
+          }
+
+          this.getNodeTextOffset = getNodeTextOffset;
+          this.textOffsetToNode = textOffsetToNode;
+        }
+
+        function newLangChoiceElem(lang, checked, onChange) {
+          var title = lang == null ? 'Auto' : lang;
+          var input = document.createElement('input');
+          input.type = lang == null ? 'checkbox' : 'radio';
+          input.name = lang == null ? 'langauto' : 'lang';
+          input.checked = checked;
+          input.title = title;
+          input.addEventListener('change', function () {
+            if (lang == null) onChange(input.checked);
+            else if (input.checked) onChange(lang);
+          });
+          var label = document.createElement('label');
+          label.className = (lang == null ? 'selauto' : 'sellang sel-' + lang) +
+            (checked ? ' active' : '');
+          if (lang != null) label.title = title;
+          label.appendChild(input);
+          if (lang == null) label.appendChild(document.createTextNode(title));
+          return { name: lang, container: label, element: input };
+        }
+
+        function setupForm(form) {
+          var codeElem = form.getElementsByClassName('codearea')[0];
+          var choicesElem = form.getElementsByClassName('langchoices')[0];
+          var currentLang, isAuto = true;
+          var choices = [];
+          var dirty = true, reqRender = false;
+          var CLSRE = /(?:^|[\11\12\14\15\40])active(?:$|(?=[\11\12\14\15\40]))/g;
+          function setCurrentLang(lang) {
+            currentLang = lang;
+            choices.forEach(function (item) {
+              var b = item.name != null ? item.name === currentLang : !!isAuto;
+              var c = item.container;
+              var n = c.className;
+              if (b !== (n.search(CLSRE) !== -1)) {
+                c.className = b ? n + ' active' : n.replace(CLSRE, '');
+              }
+              var e = item.element;
+              if (b === !e.checked) e.checked = b;
+            });
+          }
+          function render() {
+            if (!dirty || !(isAuto || currentLang)) return;
+
+            var pts = [], shs = [], ptl = 0, sha = 0, bud = [];
+            var txt = codeElem.textContent;
+            reindent(txt, INDENT, function (j, n) {
+              if (n) {
+                bud[sha] = txt.substring(ptl, j);
+                pts.push(j); shs.push(sha += n);
+                ptl = j + 1;
+              }
+            });
+            if (ptl) {
+              bud[sha] = txt.substring(ptl);
+              txt = null;
+              txt = bud.join(' ');
+            }
+            var qr = new OffsetQuery(codeElem);
+            function getOff(c, o) {
+              var k = qr.getNodeTextOffset(c, o);
+              if (k != null) {
+                var r = bsleft(pts, k);
+                if (r > 0) k += shs[r - 1] - r;
+              }
+              return k;
+            }
+            var sel = window.getSelection();
+            var rangeInfo = [];
+            for (var i = 0; i < sel.rangeCount; i += 1) {
+              var range = sel.getRangeAt(i);
+              var startOff = getOff(range.startContainer, range.startOffset);
+              var endOff = getOff(range.endContainer, range.endOffset);
+              if (startOff != null || endOff != null) {
+                logfn("Range(" + startOff + ", " + endOff + "):",
+                  range.startContainer, ",", range.endContainer);
+                rangeInfo.push({ obj: range, start: startOff, end: endOff });
+              }
+              range = null;
+            }
+            var res = isAuto
+              ? hljs.highlightAuto(txt, LANGUAGES)
+              : hljs.highlight(currentLang, txt);
+            txt = null;
+            if (isAuto) setCurrentLang(res.language);
+            codeElem.innerHTML = res.value;
+            res = null;
+            rangeInfo.forEach(function (x) {
+              logfn("info:", x);
+              var r = x.obj;
+              var si = x.start != null && qr.textOffsetToNode(x.start);
+              var ei = x.end != null && qr.textOffsetToNode(x.end);
+              logfn("si:", si, ", ei:", ei);
+              if (si) r.setStart(si.node, si.offset);
+              if (ei) r.setEnd(ei.node, ei.offset);
+            });
+            dirty = false;
+            reqRender = false;
+          }
+          function onLangChange(lang) {
+            isAuto = false; dirty = true;
+            setCurrentLang(lang);
+            render();
+          }
+          function onAutoFlagChange(val) {
+            if (isAuto === val) return;
+            isAuto = val; dirty = true;
+            setCurrentLang(currentLang);
+            render();
+          }
+          function addSelection(val) {
+            var elem = newLangChoiceElem(val,
+              val == null ? isAuto : currentLang === val,
+              val == null ? onAutoFlagChange : onLangChange);
+            choicesElem.appendChild(elem.container);
+            choices.push(elem);
+          }
+          addSelection(null);
+          LANGUAGES.forEach(addSelection);
+          form.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            render();
+          });
+          function evhRender(ev) {
+            render();
+          }
+          codeElem.addEventListener('blur', evhRender);
+          codeElem.addEventListener('cut', evhRender);
+          codeElem.addEventListener('copy', evhRender);
+          codeElem.addEventListener('paste', function (ev) {
+            reqRender = true;
+          });
+          codeElem.addEventListener('keydown', function (ev) {
+            switch (ev.charCode || ev.keyCode) {
+            case 9:
+              var html = INDENT ? '<span class="tmp_tabtell">\t</span>' : '\t';
+              document.execCommand('insertHTML', false, html);
+              if (INDENT) {
+                var tts = codeElem.getElementsByClassName("tmp_tabtell");
+                if (tts && tts.length >= 1) {
+                  var tt = tts[0];
+                  tt.className = '';
+                  var amount = INDENT - getColumn(codeElem, tt) % INDENT;
+                  tt.parentNode.removeChild(tt);
+                  var ind = new Array(1 + amount).join(' ');
+                  document.execCommand('insertHTML', false, ind);
+                }
+              }
+              ev.preventDefault();
+              break;
+            case 10: case 13:
+              var lc = codeElem.lastChild, sep;
+              if (!lc || lc.nodeType !== Node.TEXT_NODE
+               || lc.nodeValue.slice(-1) !== '\n') {
+                codeElem.appendChild(document.createTextNode('\n'));
+              }
+              sep = document.createElement('div');
+              codeElem.appendChild(sep);
+              reqRender = true;
+              document.execCommand('insertHTML', false, '\n');
+              if (sep.parentNode === codeElem) codeElem.removeChild(sep);
+              ev.preventDefault();
+              break;
+            case 38: case 40:
+              render();
+              break;
+            }
+          });
+          codeElem.addEventListener('input', function (ev) {
+            dirty = true;
+            var nodes = codeElem.childNodes;
+            if (nodes.length === 1) {
+              var n = nodes[0], b = false;
+              switch (n.nodeType) {
+              case Node.TEXT_NODE:
+                b = /^\r?\n?$/.test(n.nodeValue);
+                break;
+              case Node.ELEMENT_NODE:
+                b = n.tagName === "BR";
+                break;
+              }
+              if (b) codeElem.removeChild(n);
+            }
+            reindent(codeElem, INDENT);
+            if (reqRender) render();
+          });
+          render();
+          codeElem.contentEditable = true;
+          codeElem.spellcheck = false;
+          codeElem.focus();
+        }
+
+        (function (hlforms) {
+          for (var i = 0; i < hlforms.length; i += 1) setupForm(hlforms[i]);
+        })(document.getElementsByClassName("hlform"));
+      });
+    /*]]>*/--></script>
+    <style type="text/css" nonce="1234"><!--/*--><![CDATA[/*><!--*/
+.hlform .langchoices label.sel-python {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20version%3D%221.0%22%20width%3D%2292pt%22%20height%3D%2292pt%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22jj%22%3E%3Cstop%20style%3D%22stop-color%3A%23ffd43b%3Bstop-opacity%3A1%22%20offset%3D%220%22%2F%3E%3Cstop%20style%3D%22stop-color%3A%23ffe873%3Bstop-opacity%3A1%22%20offset%3D%221%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22qj%22%3E%3Cstop%20style%3D%22stop-color%3A%235a9fd4%3Bstop-opacity%3A1%22%20offset%3D%220%22%2F%3E%3Cstop%20style%3D%22stop-color%3A%23306998%3Bstop-opacity%3A1%22%20offset%3D%221%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20x1%3D%22150.96111%22%20y1%3D%22192.35176%22%20x2%3D%22112.03144%22%20y2%3D%22137.27299%22%20id%3D%22qq%22%20xlink%3Ahref%3D%22%23jj%22%20gradientUnits%3D%22userSpaceOnUse%22%20gradientTransform%3D%22matrix(0.562541%2C0%2C0%2C0.567972%2C-9.399749%2C-5.305317)%22%2F%3E%3ClinearGradient%20x1%3D%2226.648937%22%20y1%3D%2220.603781%22%20x2%3D%22135.66525%22%20y2%3D%22114.39767%22%20id%3D%22jq%22%20xlink%3Ahref%3D%22%23qj%22%20gradientUnits%3D%22userSpaceOnUse%22%20gradientTransform%3D%22matrix(0.562541%2C0%2C0%2C0.567972%2C-9.399749%2C-5.305317)%22%2F%3E%3C%2Fdefs%3E%3Cpath%20style%3D%22fill%3Aurl(%23jq)%3Bfill-opacity%3A1%22%20d%3D%22M%2060.510156%2C6.3979729%20C%2055.926503%2C6.4192712%2051.549217%2C6.8101906%2047.697656%2C7.4917229%20C%2036.35144%2C9.4962267%2034.291407%2C13.691825%2034.291406%2C21.429223%20L%2034.291406%2C31.647973%20L%2061.103906%2C31.647973%20L%2061.103906%2C35.054223%20L%2034.291406%2C35.054223%20L%2024.228906%2C35.054223%20C%2016.436447%2C35.054223%209.6131468%2C39.73794%207.4789058%2C48.647973%20C%205.0170858%2C58.860939%204.9078907%2C65.233996%207.4789058%2C75.897973%20C%209.3848341%2C83.835825%2013.936449%2C89.491721%2021.728906%2C89.491723%20L%2030.947656%2C89.491723%20L%2030.947656%2C77.241723%20C%2030.947656%2C68.391821%2038.6048%2C60.585475%2047.697656%2C60.585473%20L%2074.478906%2C60.585473%20C%2081.933857%2C60.585473%2087.885159%2C54.447309%2087.885156%2C46.960473%20L%2087.885156%2C21.429223%20C%2087.885156%2C14.162884%2081.755176%2C8.7044455%2074.478906%2C7.4917229%20C%2069.872919%2C6.7249976%2065.093809%2C6.3766746%2060.510156%2C6.3979729%20z%20M%2046.010156%2C14.616723%20C%2048.779703%2C14.616723%2051.041406%2C16.915369%2051.041406%2C19.741723%20C%2051.041404%2C22.558059%2048.779703%2C24.835473%2046.010156%2C24.835473%20C%2043.23068%2C24.835472%2040.978906%2C22.558058%2040.978906%2C19.741723%20C%2040.978905%2C16.91537%2043.23068%2C14.616723%2046.010156%2C14.616723%20z%22%2F%3E%3Cpath%20style%3D%22fill%3Aurl(%23qq)%3Bfill-opacity%3A1%22%20d%3D%22M%2091.228906%2C35.054223%20L%2091.228906%2C46.960473%20C%2091.228906%2C56.191228%2083.403011%2C63.960472%2074.478906%2C63.960473%20L%2047.697656%2C63.960473%20C%2040.361823%2C63.960473%2034.291407%2C70.238956%2034.291406%2C77.585473%20L%2034.291406%2C103.11672%20C%2034.291406%2C110.38306%2040.609994%2C114.65704%2047.697656%2C116.74172%20C%2056.184987%2C119.23733%2064.323893%2C119.68835%2074.478906%2C116.74172%20C%2081.229061%2C114.78733%2087.885159%2C110.85411%2087.885156%2C103.11672%20L%2087.885156%2C92.897973%20L%2061.103906%2C92.897973%20L%2061.103906%2C89.491723%20L%2087.885156%2C89.491723%20L%20101.29141%2C89.491723%20C%20109.08387%2C89.491723%20111.98766%2C84.056315%20114.69765%2C75.897973%20C%20117.49698%2C67.499087%20117.37787%2C59.422197%20114.69765%2C48.647973%20C%20112.77187%2C40.890532%20109.09378%2C35.054223%20101.29141%2C35.054223%20L%2091.228906%2C35.054223%20z%20M%2076.166406%2C99.710473%20C%2078.945884%2C99.710476%2081.197656%2C101.98789%2081.197656%2C104.80422%20C%2081.197654%2C107.63057%2078.945881%2C109.92922%2076.166406%2C109.92922%20C%2073.396856%2C109.92922%2071.135156%2C107.63057%2071.135156%2C104.80422%20C%2071.135158%2C101.98789%2073.396853%2C99.710473%2076.166406%2C99.710473%20z%22%2F%3E%3C%2Fsvg%3E");
+}
+.hlform .langchoices label.sel-bash {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M.3%200h48v48H.3z%22%2F%3E%3Cpath%20d%3D%22M42.4%209.8L27.2.8c-1.8-1.1-4-1.1-5.8%200l-15.2%209c-1.8%201.1-2.9%203.1-2.9%205.2v18c0%202.1%201.1%204.1%202.9%205.2l15.2%209c.9.5%201.9.8%202.9.8s2-.3%202.9-.8l15.2-9c1.8-1.1%202.9-3.1%202.9-5.2V15c0-2.1-1.1-4.1-2.9-5.2z%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M42.4%209.8L27.2.8c-.9-.5-1.9-.8-2.9-.8s-2%20.3-2.9.8l-15.2%209c-1.8%201.1-2.9%203.1-2.9%205.2v18c0%202.1%201.1%204.1%202.9%205.2l15.2%209c.9.5%201.9.8%202.9.8s2-.3%202.9-.8l15.2-9c1.8-1.1%202.9-3.1%202.9-5.2V15c0-2.1-1.1-4.1-2.9-5.2zM21.9%2046.3l-15.2-9c-1.5-.9-2.4-2.5-2.4-4.3V15c0-1.8.9-3.4%202.4-4.3l15.2-9c.7-.4%201.6-.7%202.4-.7.8%200%201.7.2%202.4.7l15.2%209c1.2.7%202.1%202%202.3%203.5-.5-1.1-1.6-1.4-3-.6l-14.3%208.9c-1.8%201-3.1%202.2-3.1%204.4v17.7c0%201.3.5%202.1%201.3%202.4-.3%200-.5.1-.8.1-.8-.2-1.6-.4-2.4-.8z%22%20fill%3D%22%23283037%22%2F%3E%3Cpath%20d%3D%22M38.4%2034.7L34.7%2037c-.1.1-.2.1-.2.2v1c0%20.1.1.2.2.1l3.8-2.3c.1-.1.1-.2.1-.3v-.9c0-.1-.1-.1-.2-.1z%22%20fill%3D%22%234da825%22%2F%3E%3Cpath%20d%3D%22M30.4%2026.4c.1-.1.2%200%20.2.2v1.3c.5-.2%201-.3%201.5-.2.1%200%20.1.2.1.3l-.3%201.2c0%20.1-.1.2-.1.2s-.1%200-.1.1h-.1c-.2%200-.7-.1-1.4.2-.8.4-1%201.1-1%201.6%200%20.6.3.8%201.4.8%201.4%200%202%20.6%202%202s-.7%202.9-1.9%203.8v1.3c0%20.2-.1.3-.2.4l-.8.4c-.1.1-.2%200-.2-.2v-1.3c-.7.3-1.3.3-1.7.2-.1%200-.1-.1-.1-.3l.3-1.2c0-.1.1-.2.1-.2l.1-.1h.1c.5.2%201%20.1%201.6-.2.7-.4%201.2-1.1%201.2-1.8s-.4-.9-1.2-.9c-1.1%200-2.1-.2-2.1-1.8%200-1.3.7-2.7%201.8-3.6v-1.3c0-.2.1-.3.2-.4l.6-.5z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E");
+}
+.hlform .langchoices label.sel-cpp {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22306%22%20height%3D%22344.35%22%3E%3Cpath%20fill%3D%22%2300599C%22%20d%3D%22M302.107%20258.262c2.401-4.159%203.893-8.845%203.893-13.053V99.14c0-4.208-1.49-8.893-3.892-13.052L153%20172.175l149.107%2086.087z%22%2F%3E%3Cpath%20fill%3D%22%23004482%22%20d%3D%22M166.25%20341.193l126.5-73.034c3.644-2.104%206.956-5.737%209.357-9.897L153%20172.175%203.893%20258.263c2.401%204.159%205.714%207.793%209.357%209.896l126.5%2073.034c7.287%204.208%2019.213%204.208%2026.5%200z%22%2F%3E%3Cpath%20fill%3D%22%23659AD2%22%20d%3D%22M302.108%2086.087c-2.402-4.16-5.715-7.793-9.358-9.897L166.25%203.156c-7.287-4.208-19.213-4.208-26.5%200L13.25%2076.19C5.962%2080.397%200%2090.725%200%2099.14v146.069c0%204.208%201.491%208.894%203.893%2013.053L153%20172.175l149.108-86.088z%22%2F%3E%3Cpath%20fill%3D%22%23FFF%22%20d%3D%22M153%20274.175c-56.243%200-102-45.757-102-102s45.757-102%20102-102c36.292%200%2070.139%2019.53%2088.331%2050.968l-44.143%2025.544c-9.105-15.736-26.038-25.512-44.188-25.512-28.122%200-51%2022.878-51%2051%200%2028.121%2022.878%2051%2051%2051%2018.152%200%2035.085-9.776%2044.191-25.515l44.143%2025.543c-18.192%2031.441-52.04%2050.972-88.334%2050.972z%22%2F%3E%3Cpath%20fill%3D%22%23FFF%22%20d%3D%22M255%20166.508h-11.334v-11.333h-11.332v11.333H221v11.333h11.334v11.334h11.332v-11.334H255zM297.5%20166.508h-11.334v-11.333h-11.332v11.333H263.5v11.333h11.334v11.334h11.332v-11.334H297.5z%22%2F%3E%3C%2Fsvg%3E");
+}
+.hlform .langchoices label.sel-javascript {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20630%20630%22%3E%3Cpath%20fill%3D%22%23f7df1e%22%20d%3D%22M0%200h630v630H0z%22%2F%3E%3Cpath%20d%3D%22M423.2%20492.19c12.69%2020.72%2029.2%2035.95%2058.4%2035.95%2024.53%200%2040.2-12.26%2040.2-29.2%200-20.3-16.1-27.49-43.1-39.3l-14.8-6.35c-42.72-18.2-71.1-41-71.1-89.2%200-44.4%2033.83-78.2%2086.7-78.2%2037.64%200%2064.7%2013.1%2084.2%2047.4l-46.1%2029.6c-10.15-18.2-21.1-25.37-38.1-25.37-17.34%200-28.33%2011-28.33%2025.37%200%2017.76%2011%2024.95%2036.4%2035.95l14.8%206.34c50.3%2021.57%2078.7%2043.56%2078.7%2093%200%2053.3-41.87%2082.5-98.1%2082.5-54.98%200-90.5-26.2-107.88-60.54zm-209.13%205.13c9.3%2016.5%2017.76%2030.45%2038.1%2030.45%2019.45%200%2031.72-7.61%2031.72-37.2v-201.3h59.2v202.1c0%2061.3-35.94%2089.2-88.4%2089.2-47.4%200-74.85-24.53-88.81-54.075z%22%2F%3E%3C%2Fsvg%3E");
+}
+      /*]]>*/--></style>
+    </head>
+  <body>
+    <form class="hlform">
+      <div class="langchoices"></div>
+      <div class="codearea"></div>
+    </form>
+  </body>
 </html>
